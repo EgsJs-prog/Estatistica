@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Aplicativo acadêmico de Estatística Descritiva para análise de dados qualitativos nominais e ordinais. Calcule frequências, visualize gráficos e interprete resultados.">
+<meta name="theme-color" content="#1a5276">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Estatística">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Estatística Descritiva – Dados Qualitativos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="app-header" role="banner">
+  <div class="header-inner">
+    <div class="header-brand">
+      <svg class="header-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+      <div>
+        <span class="header-title">Estatística Descritiva</span>
+        <span class="header-subtitle">Dados Qualitativos</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-saved" class="btn-icon" title="Análises salvas" aria-label="Análises salvas">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        <span class="saved-badge" id="saved-badge" style="display:none"></span>
+      </button>
+      <button id="btn-install" class="btn-icon" title="Instalar aplicativo" aria-label="Instalar aplicativo" style="display:none">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main-content">
+
+  <!-- ===== HOME SCREEN ===== -->
+  <section id="screen-home" class="screen active">
+    <div class="home-hero">
+      <div class="home-icon-wrap">
+        <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="24" width="8" height="18" rx="2"/><rect x="20" y="14" width="8" height="28" rx="2"/><rect x="34" y="6" width="8" height="36" rx="2"/></svg>
+      </div>
+      <h1 class="home-title">Analise seus dados qualitativos</h1>
+      <p class="home-desc">Organize categorias, calcule frequências absolutas, relativas e percentuais, e visualize os resultados com gráficos — tudo no seu dispositivo.</p>
+    </div>
+
+    <div class="home-actions">
+      <button id="btn-new-analysis" class="btn btn-primary btn-large">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nova análise
+      </button>
+      <button id="btn-try-example" class="btn btn-secondary btn-large">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Experimentar um exemplo
+      </button>
+    </div>
+
+    <div id="home-saved-section" class="home-saved-section" style="display:none">
+      <h2 class="home-saved-title">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+        Análises recentes
+      </h2>
+      <div id="home-saved-list" class="saved-list-compact"></div>
+    </div>
+
+    <details class="learn-section">
+      <summary class="learn-toggle">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Aprender sobre dados qualitativos
+      </summary>
+      <div class="learn-content">
+        <div class="didactic-box">
+          <strong>Dados qualitativos</strong> representam categorias ou características, e não medidas numéricas. Exemplos: cor preferida, estado civil, nível de satisfação e tipo de transporte.
+        </div>
+        <div class="learn-grid">
+          <div class="learn-card">
+            <strong>Variável nominal</strong>
+            <span>As categorias não possuem uma ordem natural.<br>Exemplo: vermelho, azul, verde.</span>
+          </div>
+          <div class="learn-card">
+            <strong>Variável ordinal</strong>
+            <span>As categorias possuem uma ordem lógica.<br>Exemplo: ruim, regular, bom, ótimo.</span>
+          </div>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===== EXAMPLE PICKER ===== -->
+  <div id="modal-examples" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-ex-title">
+    <div class="modal-card">
+      <h2 id="modal-ex-title" class="modal-title">Escolha um exemplo</h2>
+      <p class="modal-desc">Selecione um conjunto de dados para ver como o aplicativo funciona.</p>
+      <div class="example-options">
+        <button id="ex-transport" class="example-option">
+          <span class="example-option-icon">🚌</span>
+          <div>
+            <strong>Meio de transporte</strong>
+            <span>Variável nominal — 40 observações, 5 categorias</span>
+          </div>
+        </button>
+        <button id="ex-satisfaction" class="example-option">
+          <span class="example-option-icon">⭐</span>
+          <div>
+            <strong>Satisfação com o curso</strong>
+            <span>Variável ordinal — 40 observações, 5 categorias</span>
+          </div>
+        </button>
+      </div>
+      <button id="modal-ex-close" class="btn btn-text modal-close-btn">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- ===== STEP INDICATOR ===== -->
+  <div id="step-indicator" class="step-indicator" style="display:none">
+    <div class="step-track">
+      <button class="step-dot active" data-step="1" aria-label="Etapa 1: Dados">
+        <span class="step-num">1</span>
+        <span class="step-label">Dados</span>
+      </button>
+      <div class="step-line"></div>
+      <button class="step-dot" data-step="2" aria-label="Etapa 2: Tipo de variável">
+        <span class="step-num">2</span>
+        <span class="step-label">Tipo</span>
+      </button>
+      <div class="step-line"></div>
+      <button class="step-dot" data-step="3" aria-label="Etapa 3: Resultados">
+        <span class="step-num">3</span>
+        <span class="step-label">Resultados</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== STEP 1: DATA INPUT ===== -->
+  <section id="screen-step1" class="screen" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <span class="step-badge">Etapa 1 de 3</span>
+        <h2>Informe os dados da pesquisa</h2>
+      </div>
+
+      <div class="field-group">
+        <label for="field-name" class="field-label">O que você está pesquisando?</label>
+        <input type="text" id="field-name" class="field-input" placeholder="Ex.: Meio de transporte dos alunos" autocomplete="off">
+      </div>
+
+      <div class="field-group">
+        <label for="field-data" class="field-label">Observações coletadas</label>
+        <span class="field-help">Digite ou cole as respostas. Separe por <strong>vírgula</strong>, <strong>ponto e vírgula</strong> ou <strong>uma por linha</strong>.</span>
+        <textarea id="field-data" class="field-textarea" placeholder="Exemplo: Ônibus, A pé, Carro, Ônibus, Moto, Ônibus"></textarea>
+      </div>
+
+      <!-- Preview of parsed data -->
+      <div id="data-preview" class="data-preview" style="display:none">
+        <div class="preview-header">
+          <span class="preview-title">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Prévia dos dados
+          </span>
+          <span id="preview-count" class="preview-count"></span>
+        </div>
+        <div id="preview-categories" class="preview-categories"></div>
+        <div id="preview-adjustments" class="preview-adjustments" style="display:none"></div>
+      </div>
+
+      <!-- Duplicate detection -->
+      <div id="duplicate-warning" class="duplicate-warning" style="display:none">
+        <div class="duplicate-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <strong>Possíveis categorias duplicadas</strong>
+        </div>
+        <div id="duplicate-list" class="duplicate-list"></div>
+      </div>
+
+      <div id="step1-error" class="field-error" style="display:none" role="alert"></div>
+
+      <div class="step-actions">
+        <button id="btn-step1-back" class="btn btn-text">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Início
+        </button>
+        <button id="btn-step1-next" class="btn btn-primary">
+          Avançar
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STEP 2: VARIABLE TYPE ===== -->
+  <section id="screen-step2" class="screen" style="display:none">
+    <div class="card">
+      <div class="card-header">
+        <span class="step-badge">Etapa 2 de 3</span>
+        <h2>Classifique a variável</h2>
+      </div>
+
+      <p class="step2-intro">Como as categorias se relacionam?</p>
+
+      <div class="type-options">
+        <label class="type-option" id="opt-nominal">
+          <input type="radio" name="var-type" value="nom" checked>
+          <div class="type-option-content">
+            <div class="type-option-header">
+              <span class="type-option-title">Nominal</span>
+              <span class="type-option-badge">Sem ordem</span>
+            </div>
+            <span class="type-option-desc">Categorias sem ordem natural entre elas.</span>
+            <span class="type-option-example">Ex.: meio de transporte, cor, estado civil.</span>
+          </div>
+        </label>
+        <label class="type-option" id="opt-ordinal">
+          <input type="radio" name="var-type" value="ord">
+          <div class="type-option-content">
+            <div class="type-option-header">
+              <span class="type-option-title">Ordinal</span>
+              <span class="type-option-badge type-option-badge--ord">Com ordem</span>
+            </div>
+            <span class="type-option-desc">Categorias que seguem uma ordem lógica (da menor para a maior).</span>
+            <span class="type-option-example">Ex.: nível de satisfação, escolaridade, faixa etária.</span>
+          </div>
+        </label>
+      </div>
+
+      <details class="help-details">
+        <summary>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Não sei qual escolher
+        </summary>
+        <p>Pergunte-se: "Faz sentido dizer que uma categoria é <em>maior</em> ou <em>melhor</em> que outra?" Se sim, é <strong>ordinal</strong>. Caso contrário, é <strong>nominal</strong>.</p>
+      </details>
+
+      <!-- Ordinal ordering section -->
+      <div id="ordinal-section" class="ordinal-section" style="display:none">
+        <div class="ordinal-header">
+          <h3>Defina a ordem das categorias</h3>
+          <p>Organize da <strong>menor</strong> para a <strong>maior</strong>. Use os botões ou arraste para reordenar.</p>
+        </div>
+        <div id="ordinal-list" class="ordinal-list" role="list" aria-label="Categorias para ordenar"></div>
+        <div id="ordinal-error" class="field-error" style="display:none" role="alert"></div>
+      </div>
+
+      <div id="step2-error" class="field-error" style="display:none" role="alert"></div>
+
+      <div class="step-actions">
+        <button id="btn-step2-back" class="btn btn-text">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          Voltar
+        </button>
+        <button id="btn-step2-next" class="btn btn-primary">
+          Calcular frequências
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STEP 3: RESULTS ===== -->
+  <section id="screen-step3" class="screen" style="display:none">
+    <div class="results-topbar">
+      <button id="btn-step3-back" class="btn btn-text">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Voltar
+      </button>
+      <div class="results-topbar-actions">
+        <button id="btn-save-analysis" class="btn btn-secondary btn-small" title="Salvar análise">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+          Salvar
+        </button>
+        <button id="btn-print" class="btn btn-secondary btn-small" title="Imprimir / Salvar PDF">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Imprimir
+        </button>
+        <button id="btn-csv" class="btn btn-secondary btn-small" title="Baixar CSV">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CSV
+        </button>
+      </div>
+    </div>
+
+    <div id="stale-warning" class="stale-warning" style="display:none">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <span>Os dados foram alterados. <button id="btn-recalc" class="btn-link">Recalcular</button></span>
+    </div>
+
+    <!-- Summary cards -->
+    <div class="summary-strip">
+      <div class="summary-card">
+        <span class="summary-value" id="sum-total">—</span>
+        <span class="summary-label">Observações</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-value" id="sum-cats">—</span>
+        <span class="summary-label">Categorias</span>
+      </div>
+      <div class="summary-card summary-card--highlight">
+        <span class="summary-value" id="sum-moda">—</span>
+        <span class="summary-label" id="sum-moda-label">Mais frequente</span>
+      </div>
+    </div>
+
+    <!-- Results tabs -->
+    <div class="results-tabs" role="tablist">
+      <button class="results-tab active" role="tab" aria-selected="true" data-tab="tab-summary" id="rtab-summary">Resumo</button>
+      <button class="results-tab" role="tab" aria-selected="false" data-tab="tab-table" id="rtab-table">Tabela</button>
+      <button class="results-tab" role="tab" aria-selected="false" data-tab="tab-charts" id="rtab-charts">Gráficos</button>
+    </div>
+
+    <!-- TAB: Summary -->
+    <div id="tab-summary" class="results-panel active" role="tabpanel">
+      <div class="card">
+        <h3 class="result-section-title">Interpretação</h3>
+        <p id="interp-text" class="interpretation-text"></p>
+      </div>
+      <details class="card understand-calc">
+        <summary class="understand-toggle">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Entenda o cálculo
+        </summary>
+        <div id="calc-explanation" class="calc-explanation"></div>
+      </details>
+    </div>
+
+    <!-- TAB: Table -->
+    <div id="tab-table" class="results-panel" style="display:none" role="tabpanel">
+      <div class="card">
+        <div class="table-info">
+          <h3 class="result-section-title">Tabela de frequências — <span id="table-var-name"></span></h3>
+          <div class="table-legend">
+            <span><strong>Quantidade (fi)</strong> = vezes que a categoria apareceu</span>
+            <span><strong>Proporção (fr)</strong> = fi dividido pelo total</span>
+            <span><strong>Percentual</strong> = proporção × 100</span>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table id="freq-table" class="freq-table"></table>
+        </div>
+        <p id="table-note" class="table-note"></p>
+        <p id="rounding-note" class="rounding-note" style="display:none"></p>
+      </div>
+    </div>
+
+    <!-- TAB: Charts -->
+    <div id="tab-charts" class="results-panel" style="display:none" role="tabpanel">
+      <div class="chart-toggle-group">
+        <button id="btn-chart-bar" class="chart-toggle active" aria-pressed="true">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+          Barras
+        </button>
+        <button id="btn-chart-pie" class="chart-toggle" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 118 2.83"/><path d="M22 12A10 10 0 0012 2v10z"/></svg>
+          Setores
+        </button>
+      </div>
+
+      <div class="card">
+        <div id="chart-bar-container" class="chart-container">
+          <div id="bar-chart"></div>
+        </div>
+        <div id="chart-pie-container" class="chart-container" style="display:none">
+          <div id="pie-chart"></div>
+        </div>
+        <div class="chart-legend" id="chart-legend"></div>
+      </div>
+    </div>
+
+    <!-- New analysis button -->
+    <div class="results-footer">
+      <button id="btn-new-from-results" class="btn btn-secondary">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nova análise
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== SAVED ANALYSES PANEL ===== -->
+  <div id="modal-saved" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-saved-title">
+    <div class="modal-card modal-card--wide">
+      <h2 id="modal-saved-title" class="modal-title">Análises salvas</h2>
+      <p class="modal-desc saved-storage-note">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Os dados ficam neste dispositivo e podem ser perdidos ao limpar os dados do navegador.
+      </p>
+      <div id="saved-list" class="saved-list"></div>
+      <div id="saved-empty" class="saved-empty" style="display:none">
+        <p>Nenhuma análise salva ainda.</p>
+      </div>
+      <button id="modal-saved-close" class="btn btn-text modal-close-btn">Fechar</button>
+    </div>
+  </div>
+
+  <!-- ===== SAVE DIALOG ===== -->
+  <div id="modal-save" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-save-title">
+    <div class="modal-card">
+      <h2 id="modal-save-title" class="modal-title">Salvar análise</h2>
+      <div class="field-group">
+        <label for="save-name" class="field-label">Nome da análise</label>
+        <input type="text" id="save-name" class="field-input" placeholder="Ex.: Transporte dos alunos 2024" autocomplete="off">
+      </div>
+      <div class="modal-actions">
+        <button id="modal-save-cancel" class="btn btn-text">Cancelar</button>
+        <button id="modal-save-confirm" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RENAME DIALOG ===== -->
+  <div id="modal-rename" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-rename-title">
+    <div class="modal-card">
+      <h2 id="modal-rename-title" class="modal-title">Renomear análise</h2>
+      <div class="field-group">
+        <label for="rename-name" class="field-label">Novo nome</label>
+        <input type="text" id="rename-name" class="field-input" autocomplete="off">
+      </div>
+      <div class="modal-actions">
+        <button id="modal-rename-cancel" class="btn btn-text">Cancelar</button>
+        <button id="modal-rename-confirm" class="btn btn-primary">Renomear</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ===== TOAST ===== -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
