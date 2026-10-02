@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estatística Descritiva – Dados Qualitativos</title>
+<style>
+:root{
+  --bg:#f6f7f9;
+  --surface:#ffffff;
+  --surface-soft:#f9fafb;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --border:#d8dee7;
+  --primary:#24557a;
+  --primary-soft:#eef4f8;
+  --accent:#dbe8f1;
+  --success:#2f6b4f;
+  --danger:#a12a2a;
+  --danger-bg:#fff4f4;
+  --shadow:0 2px 8px rgba(15,23,42,.05);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",Arial,sans-serif;line-height:1.55}
+main{max-width:1080px;margin:0 auto;padding:34px 18px 56px}
+.page-header{margin-bottom:20px}
+.page-header h1{margin:0;font-size:1.85rem;line-height:1.2;color:#17212b;letter-spacing:-.02em}
+.page-header p{margin:7px 0 0;color:var(--muted);font-size:.98rem;max-width:760px}
+.learning-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0 18px}
+.learning-step{background:var(--surface);border:1px solid var(--border);padding:13px 14px;border-radius:8px;display:flex;gap:10px;align-items:flex-start}
+.learning-step b{display:flex;width:25px;height:25px;border-radius:50%;background:var(--primary);color:#fff;align-items:center;justify-content:center;font-size:.8rem;flex:0 0 25px}
+.learning-step strong{display:block;font-size:.9rem;color:#263746;margin-bottom:2px}.learning-step span{display:block;color:var(--muted);font-size:.82rem;line-height:1.35}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow)}
+h2{margin:0 0 14px;font-size:1.02rem;color:#24313e}.section-kicker{display:block;color:var(--primary);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.didactic-box{background:var(--primary-soft);border-left:3px solid var(--primary);padding:12px 14px;border-radius:5px;margin:12px 0;color:#354452;font-size:.9rem}.didactic-box strong{color:#203445}
+.tip-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.tip{border:1px solid var(--border);background:var(--surface-soft);border-radius:7px;padding:11px 12px}.tip strong{display:block;font-size:.86rem;margin-bottom:3px;color:#2c3b49}.tip span{font-size:.82rem;color:var(--muted);line-height:1.4}
+label{display:block;font-weight:600;font-size:.9rem;margin:13px 0 5px;color:#344054}.help{display:block;color:var(--muted);font-size:.8rem;margin:0 0 6px}
+textarea,input[type=text]{width:100%;padding:10px 11px;border:1px solid #cfd6df;border-radius:6px;background:#fff;color:var(--text);font:inherit;outline:none;transition:.15s}textarea{min-height:112px;resize:vertical}textarea:focus,input[type=text]:focus{border-color:var(--primary);box-shadow:0 0 0 2px rgba(36,85,122,.10)}
+.radio{display:flex;gap:10px;flex-wrap:wrap}.radio label{margin:0;display:flex;align-items:center;gap:7px;font-weight:500;border:1px solid var(--border);background:var(--surface-soft);border-radius:6px;padding:8px 10px}.radio small{color:var(--muted);font-weight:400}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.actions{margin-top:15px}
+button{font:inherit;border:1px solid #c9d0d9;background:#fff;color:#344054;border-radius:6px;padding:9px 13px;cursor:pointer;font-weight:600;transition:.15s}button:hover{background:#f4f6f8}button.p{background:var(--primary);border-color:var(--primary);color:#fff}button.p:hover{background:#1d4766}
+.example-note{margin-top:10px;color:var(--muted);font-size:.8rem}
+#err{display:none;background:var(--danger-bg);color:var(--danger);border:1px solid #e4bcbc;border-radius:6px;padding:10px 12px;margin-top:12px}#warn{color:var(--muted);font-size:.84rem;margin-top:8px}
+.result-note{background:#f7f9fb;border:1px solid var(--border);border-radius:7px;padding:12px 14px;margin-bottom:14px;color:#475467;font-size:.88rem}.result-note strong{color:#253745}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:430px;border:1px solid var(--border)}th,td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:right}th:first-child,td:first-child{text-align:left}th{font-size:.84rem;color:#475467;background:#f2f4f7;font-weight:700}tfoot td{font-weight:700;background:#f8f9fb}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.chart-help{color:var(--muted);font-size:.82rem;margin:-5px 0 10px}.legend-title{font-size:.82rem;color:#475467;font-weight:600;margin-top:10px}.leg{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:.84rem;margin-top:7px;color:#475467}.leg span{display:inline-flex;align-items:center}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}.ex{color:var(--muted);font-size:.84rem}.interpretation{font-size:.95rem;color:#344054}.formula-line{margin-top:10px;border-top:1px solid var(--border);padding-top:10px;color:var(--muted);font-size:.82rem}
+svg{width:100%;height:auto;display:block}#res{display:none}
+@media(max-width:760px){.learning-strip{grid-template-columns:1fr}.tip-grid,.grid{grid-template-columns:1fr}main{padding:24px 14px 40px}.page-header h1{font-size:1.5rem}.card{padding:16px}.actions button{flex:1 1 calc(50% - 8px)}}
+@media(max-width:440px){.actions button{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<main>
+<header class="page-header">
+  <h1>Estatística Descritiva – Dados Qualitativos</h1>
+  <p>Organize categorias, calcule frequências e visualize os resultados de forma simples.</p>
+</header>
+
+<div class="learning-strip" aria-label="Etapas da análise">
+  <div class="learning-step"><b>1</b><div><strong>Informe os dados</strong><span>Digite as categorias observadas na pesquisa.</span></div></div>
+  <div class="learning-step"><b>2</b><div><strong>Classifique a variável</strong><span>Escolha se ela é nominal ou ordinal.</span></div></div>
+  <div class="learning-step"><b>3</b><div><strong>Interprete o resultado</strong><span>Veja tabela, frequências e gráficos.</span></div></div>
+</div>
+
+<section class="card">
+  <span class="section-kicker">Antes de começar</span>
+  <h2>O que são dados qualitativos?</h2>
+  <div class="didactic-box"><strong>Dados qualitativos</strong> representam categorias ou características, e não medidas numéricas. Exemplos: cor preferida, estado civil, nível de satisfação e tipo de transporte.</div>
+  <div class="tip-grid">
+    <div class="tip"><strong>Variável nominal</strong><span>As categorias não possuem uma ordem natural. Ex.: vermelho, azul e verde.</span></div>
+    <div class="tip"><strong>Variável ordinal</strong><span>As categorias possuem uma ordem. Ex.: ruim, regular, bom e ótimo.</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <span class="section-kicker">Etapa 1</span>
+  <h2>Entrada e classificação dos dados</h2>
+
+  <label for="nome">Nome da variável</label>
+  <span class="help">Dê um nome ao que está sendo analisado.</span>
+  <input type="text" id="nome" value="Variável" placeholder="Ex.: Meio de transporte dos alunos">
+
+  <label for="dados">Observações</label>
+  <span class="help">Separe as respostas por vírgula, ponto e vírgula ou uma por linha.</span>
+  <textarea id="dados" placeholder="Ex.: Ônibus, A pé, Carro, Ônibus, Moto, Ônibus"></textarea>
+
+  <label>Tipo da variável</label>
+  <span class="help">Escolha de acordo com a relação entre as categorias.</span>
+  <div class="radio">
+    <label><input type="radio" name="tp" value="nom" checked> Nominal <small>— sem ordem</small></label>
+    <label><input type="radio" name="tp" value="ord"> Ordinal <small>— com ordem</small></label>
+  </div>
+
+  <div id="ordbox" style="display:none">
+    <label for="ordem">Ordem das categorias</label>
+    <span class="help">Informe da menor para a maior categoria.</span>
+    <input type="text" id="ordem" placeholder="Ex.: Muito insatisfeito, Insatisfeito, Neutro, Satisfeito, Muito satisfeito">
+  </div>
+
+  <div class="row actions">
+    <button class="p" id="go">Calcular frequências</button>
+    <button id="ex1">Ver exemplo nominal</button>
+    <button id="ex2">Ver exemplo ordinal</button>
+    <button id="clr">Limpar</button>
+  </div>
+  <p class="example-note">Use os exemplos para entender como preencher os dados antes de fazer sua própria análise.</p>
+  <div id="err" role="alert"></div>
+  <div id="warn"></div>
+</section>
+
+<div id="res">
+<section class="card">
+  <span class="section-kicker">Etapa 2</span>
+  <h2>Tabela de frequências – <span id="tv"></span></h2>
+  <div class="result-note"><strong>Como ler:</strong> <b>fi</b> mostra quantas vezes cada categoria apareceu; <b>fr</b> mostra a parte que ela representa do total; <b>fr (%)</b> apresenta essa mesma proporção em porcentagem.</div>
+  <div class="scroll"><table id="tab"></table></div>
+  <p class="ex" id="ord-note"></p>
+  <div class="row"><button id="csv">Baixar tabela (CSV)</button></div>
+</section>
+
+<section class="card">
+  <span class="section-kicker">Etapa 3</span>
+  <h2>Interpretação dos resultados</h2>
+  <p id="interp" class="interpretation" style="margin:0"></p>
+  <div class="formula-line"><strong>Fórmula usada:</strong> fr = fi ÷ n &nbsp; | &nbsp; frequência percentual = fr × 100.</div>
+</section>
+
+<div class="grid">
+  <section class="card">
+    <span class="section-kicker">Visualização</span>
+    <h2>Gráfico de barras</h2>
+    <p class="chart-help">Compare a quantidade de ocorrências entre as categorias. Barras maiores indicam maior frequência.</p>
+    <div id="bar"></div>
+  </section>
+  <section class="card">
+    <span class="section-kicker">Visualização</span>
+    <h2>Gráfico de setores</h2>
+    <p class="chart-help">Observe a participação percentual de cada categoria em relação ao total.</p>
+    <div id="pie"></div>
+    <div class="legend-title">Legenda</div>
+    <div class="leg" id="leg"></div>
+  </section>
+</div>
+</div>
+</main>
+<script>
+var COR=["#234a6f","#5f7488","#7b8794","#3f607a","#8a6f5a","#536b62","#6d7082","#4f6f73","#7b655d","#687785","#5b6470","#86909a"];
+var $=function(i){return document.getElementById(i)};
+var last=null;
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function fmt(x,d){return x.toLocaleString("pt-BR",{minimumFractionDigits:d,maximumFractionDigits:d})}
+function tipo(){return document.querySelector("input[name=tp]:checked").value}
+function showErr(m){var e=$("err");e.textContent=m;e.style.display="block";$("res").style.display="none"}
+function setData(v,d,t,o){$("nome").value=v;$("dados").value=d;document.querySelector("input[name=tp][value="+t+"]").checked=true;$("ordem").value=o||"";toggle();calc()}
+function mix(c){var keys=Object.keys(c),out=[],left=true;while(left){left=false;keys.forEach(function(k){if(c[k]>0){out.push(k);c[k]--;left=true}})}return out.join(", ")}
+function toggle(){$("ordbox").style.display=tipo()==="ord"?"block":"none"}
+
+function calc(){
+  $("err").style.display="none";$("warn").textContent="";
+  var raw=$("dados").value.trim();
+  if(!raw)return showErr("Informe os dados: o campo está vazio.");
+  var itens=raw.split(/[\n;,]+/).map(function(s){return s.trim()}).filter(Boolean);
+  if(itens.length<2)return showErr("Informe pelo menos 2 observações.");
+  var nums=itens.filter(function(s){return /^-?\d+([.,]\d+)?$/.test(s)}).length;
+  if(nums===itens.length)return showErr("Todos os valores são numéricos. Esta ferramenta trata dados qualitativos (categorias); confira se a variável não é quantitativa.");
+  var mapa={},ordemK=[];
+  itens.forEach(function(s){var k=s.toLowerCase();if(!(k in mapa)){mapa[k]={nome:s,fi:0};ordemK.push(k)}mapa[k].fi++});
+  var cats;
+  if(tipo()==="ord"){
+    var od=$("ordem").value.split(",").map(function(s){return s.trim()}).filter(Boolean);
+    if(od.length<2)return showErr("Para variável ordinal, informe a ordem das categorias (mínimo 2, separadas por vírgula).");
+    var ok=od.map(function(s){return s.toLowerCase()});
+    var fora=ordemK.filter(function(k){return ok.indexOf(k)<0});
+    if(fora.length)return showErr("Categoria(s) fora da ordem informada: "+fora.map(function(k){return mapa[k].nome}).join(", ")+".");
+    cats=ok.filter(function(k){return k in mapa}).map(function(k){return mapa[k]});
+    cats.forEach(function(c){var i=ok.indexOf(c.nome.toLowerCase());c.nome=od[i]});
+  }else{
+    cats=ordemK.map(function(k){return mapa[k]}).sort(function(a,b){return b.fi-a.fi});
+  }
+  if(cats.length<2)return showErr("Foi encontrada apenas 1 categoria. Informe dados com pelo menos 2 categorias distintas.");
+  var n=itens.length,ac=0;
+  cats.forEach(function(c,i){c.fr=c.fi/n;ac+=c.fi;c.fac=ac;c.frac=ac/n;c.cor=COR[i%COR.length]});
+  if(cats.length>12)$("warn").textContent="Observação: há "+cats.length+" categorias; os gráficos ficam mais legíveis com até 12.";
+  last={v:$("nome").value.trim()||"Variável",n:n,cats:cats,ord:tipo()==="ord"};
+  render();
+}
+
+function render(){
+  var L=last,c=L.cats,n=L.n;
+  $("tv").textContent=L.v;
+  var h="<thead><tr><th>Categoria</th><th>fi</th><th>fr</th><th>fr (%)</th>"+(L.ord?"<th>Fac</th><th>Fr ac. (%)</th>":"")+"</tr></thead><tbody>";
+  c.forEach(function(x){h+="<tr><td>"+esc(x.nome)+"</td><td>"+x.fi+"</td><td>"+fmt(x.fr,4)+"</td><td>"+fmt(x.fr*100,2)+"%</td>"+(L.ord?"<td>"+x.fac+"</td><td>"+fmt(x.frac*100,2)+"%</td>":"")+"</tr>"});
+  h+="</tbody><tfoot><tr><td>Total</td><td>"+n+"</td><td>"+fmt(1,4)+"</td><td>100,00%</td>"+(L.ord?"<td></td><td></td>":"")+"</tr></tfoot>";
+  $("tab").innerHTML=h;
+  $("ord-note").textContent="fi = frequência absoluta; fr = frequência relativa (fi/n)"+(L.ord?"; Fac = frequência absoluta acumulada; Fr ac. = frequência relativa acumulada.":". Categorias em ordem decrescente de frequência.");
+  var mx=Math.max.apply(null,c.map(function(x){return x.fi}));
+  var modas=c.filter(function(x){return x.fi===mx});
+  var t="Foram analisadas <b>"+n+"</b> observações da variável <b>"+esc(L.v)+"</b> ("+(L.ord?"qualitativa ordinal":"qualitativa nominal")+"), distribuídas em <b>"+c.length+"</b> categorias. ";
+  t+=modas.length===1?"A categoria mais frequente (moda) é <b>"+esc(modas[0].nome)+"</b>, com "+mx+" ocorrências ("+fmt(modas[0].fr*100,1)+"% do total).":"Há empate na moda entre "+modas.map(function(m){return "<b>"+esc(m.nome)+"</b>"}).join(", ")+", cada uma com "+mx+" ocorrências ("+fmt(modas[0].fr*100,1)+"%).";
+  var mn=c.reduce(function(a,b){return b.fi<a.fi?b:a});
+  if(mn.fi!==mx)t+=" A menos frequente é <b>"+esc(mn.nome)+"</b> ("+fmt(mn.fr*100,1)+"%).";
+  $("interp").innerHTML=t;
+  bar(c,mx);pie(c);
+  $("leg").innerHTML=c.map(function(x){return "<span><i style='background:"+x.cor+"'></i>"+esc(x.nome)+"</span>"}).join("");
+  $("res").style.display="block";
+}
+
+function bar(c,mx){
+  var W=640,H=340,l=48,r=10,tp=24,b=c.length>6?90:50,pw=W-l-r,ph=H-tp-b;
+  var passo=Math.max(1,Math.ceil(mx/5)),top=Math.ceil(mx/passo)*passo;
+  var s="<svg viewBox='0 0 "+W+" "+H+"' role='img' aria-label='Gráfico de barras'>";
+  for(var v=0;v<=top;v+=passo){var y=tp+ph-ph*v/top;s+="<line x1='"+l+"' x2='"+(W-r)+"' y1='"+y+"' y2='"+y+"' stroke='currentColor' opacity='.15'/><text x='"+(l-6)+"' y='"+(y+4)+"' text-anchor='end' font-size='12' fill='currentColor' opacity='.7'>"+v+"</text>"}
+  var bw=pw/c.length;
+  c.forEach(function(x,i){
+    var w=Math.min(bw*.7,80),cx=l+bw*i+bw/2,h=ph*x.fi/top,y=tp+ph-h;
+    s+="<rect x='"+(cx-w/2)+"' y='"+y+"' width='"+w+"' height='"+h+"' rx='3' fill='"+x.cor+"'><title>"+esc(x.nome)+": "+x.fi+" ("+fmt(x.fr*100,1)+"%)</title></rect>";
+    s+="<text x='"+cx+"' y='"+(y-5)+"' text-anchor='middle' font-size='12' font-weight='700' fill='currentColor'>"+x.fi+"</text>";
+    var lb=x.nome.length>14?x.nome.slice(0,13)+"…":x.nome,ly=tp+ph+16;
+    s+=c.length>6?"<text transform='translate("+cx+","+ly+") rotate(-35)' text-anchor='end' font-size='12' fill='currentColor'>"+esc(lb)+"</text>":"<text x='"+cx+"' y='"+ly+"' text-anchor='middle' font-size='12' fill='currentColor'>"+esc(lb)+"</text>";
+  });
+  s+="<line x1='"+l+"' x2='"+(W-r)+"' y1='"+(tp+ph)+"' y2='"+(tp+ph)+"' stroke='currentColor' opacity='.5'/>";
+  s+="<text x='12' y='"+(tp+ph/2)+"' font-size='12' fill='currentColor' opacity='.7' transform='rotate(-90 12 "+(tp+ph/2)+")' text-anchor='middle'>Frequência absoluta</text></svg>";
+  $("bar").innerHTML=s;
+}
+
+function pie(c){
+  var R=130,cx=160,cy=150,s="<svg viewBox='0 0 320 300' role='img' aria-label='Gráfico de setores'>",a=-Math.PI/2;
+  c.forEach(function(x){
+    var d=x.fr*2*Math.PI,t="<title>"+esc(x.nome)+": "+fmt(x.fr*100,1)+"%</title>";
+    if(x.fr>=0.9999){s+="<circle cx='"+cx+"' cy='"+cy+"' r='"+R+"' fill='"+x.cor+"'>"+t+"</circle>"}
+    else{
+      var x1=cx+R*Math.cos(a),y1=cy+R*Math.sin(a),x2=cx+R*Math.cos(a+d),y2=cy+R*Math.sin(a+d);
+      s+="<path d='M"+cx+","+cy+" L"+x1+","+y1+" A"+R+","+R+" 0 "+(d>Math.PI?1:0)+" 1 "+x2+","+y2+" Z' fill='"+x.cor+"' stroke='var(--card)' stroke-width='2'>"+t+"</path>";
+    }
+    if(x.fr>=0.05){var m=a+d/2;s+="<text x='"+(cx+R*.65*Math.cos(m))+"' y='"+(cy+R*.65*Math.sin(m)+4)+"' text-anchor='middle' font-size='13' font-weight='700' fill='#fff'>"+fmt(x.fr*100,1)+"%</text>"}
+    a+=d;
+  });
+  $("pie").innerHTML=s+"</svg>";
+}
+
+function csv(){
+  if(!last)return;
+  var L=last,r=["Categoria;fi;fr;fr(%)"+(L.ord?";Fac;Frac(%)":"")];
+  L.cats.forEach(function(x){r.push([x.nome,x.fi,x.fr.toFixed(4).replace(".",","),(x.fr*100).toFixed(2).replace(".",",")].concat(L.ord?[x.fac,(x.frac*100).toFixed(2).replace(".",",")]:[]).join(";"))});
+  r.push(["Total",L.n,"1,0000","100,00"].concat(L.ord?["",""]:[]).join(";"));
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+r.join("\n")],{type:"text/csv"}));a.download="tabela_frequencia.csv";a.click();
+}
+
+$("go").onclick=calc;
+$("clr").onclick=function(){$("dados").value="";$("ordem").value="";$("nome").value="Variável";$("err").style.display="none";$("warn").textContent="";$("res").style.display="none";last=null};
+$("ex1").onclick=function(){setData("Meio de transporte dos alunos",mix({"Ônibus":14,"A pé":8,"Carro":7,"Moto":6,"Bicicleta":5}),"nom")};
+$("ex2").onclick=function(){setData("Grau de satisfação com o curso",mix({"Muito insatisfeito":3,"Insatisfeito":5,"Neutro":9,"Satisfeito":14,"Muito satisfeito":9}),"ord","Muito insatisfeito, Insatisfeito, Neutro, Satisfeito, Muito satisfeito")};
+$("csv").onclick=csv;
+document.querySelectorAll("input[name=tp]").forEach(function(r){r.onchange=toggle});
+$("ex1").click();
+</script>
+</body>
+</html>
